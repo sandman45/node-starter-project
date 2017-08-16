@@ -5,24 +5,10 @@ const queries = require('../../services/mysql/sqlplease').load('/server/services
 
 const mysql = require('../../services/mysql/index').query;
 
-const id = '56d616f6120353ff06688a19';
-const sql = queries.getOrders;
-const sql2 = queries.getAllOrders;
-const values = [id];
+const sql = queries.example;
 
-function test(testParam) {
-    const testVal = `TEST ROUTE: ${testParam}`;
-    logger.debug(testVal);
-    return mysql.executeQuery('logistics', sql, values);
-}
-
-function test2(testParam) {
-    const testVal = `TEST ROUTE: ${testParam}`;
-    logger.debug(testVal);
-    return mysql.executeQuery('logistics', sql2);
-}
-
-module.exports = {
-    test,
-    test2,
+module.exports.test = (testParam) => {
+        const testVal = `TEST ROUTE: ${testParam}`;
+        logger.debug(testVal);
+        return mysql.executeQuery('database', sql);
 };

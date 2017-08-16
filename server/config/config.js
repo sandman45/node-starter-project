@@ -30,11 +30,6 @@ exports.mysql = {
     },
 };
 
-exports.mongodb = {
-    uri: process.env.MONGO_URI || 'placeholder-for-mongodb-uri',
-    db: process.env.MONGO_DB || 'placeholder-for-mongodb-db',
-};
-
 exports.credentials = {
     aws: {
         s3: {

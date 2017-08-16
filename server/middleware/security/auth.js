@@ -38,10 +38,8 @@ function authenticateToken(req) {
                 if (err) {
                     switch (err.name) {
                     case 'TokenExpiredError':
-                            // alertLogicLogger.token(req, 'CHARGEBACK_TOKEN_AUTHENTICATION_FAILURE_EXPIRED_CREDENTIALS',token);
                         break;
                     case 'JsonWebTokenError':
-                            // alertLogicLogger.token(req, 'CHARGEBACK_TOKEN_AUTHENTICATION_FAILURE_CREDENTIAL_MISMATCH',token);
                         break;
                     default:
                         break;

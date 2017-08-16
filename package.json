@@ -21,9 +21,7 @@
     "ldapjs": "^1.0.1",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.13",
-    "mongoose": "^4.10.7",
     "mysql": "^2.13.0",
-    "node-vault": "^0.5.10",
     "promise-mysql": "^3.0.1",
     "simple-encryptor": "^1.1.0"
   },
@@ -54,8 +52,8 @@
     "type": "git",
     "url": "git@github.com:sandman45/node-starter-project.git"
   },
-  "author": "",
-  "license": "",
+  "author": "Matthew W. Sanders",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sandman45/node-starter-project/issues"
   },

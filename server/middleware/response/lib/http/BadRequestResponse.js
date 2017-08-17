@@ -19,13 +19,13 @@ function BadRequestResponse(errorCode, moreInfo) {
         response.error.message = 'Bad Request: Malformed syntax, the JSON is not valid.';
         break;
     case 200:
-        response.error.message = 'Bad Request: Invalid Parameters Settlement.';
+        response.error.message = 'Bad Request: Invalid Parameters.';
         break;
     case 300:
-        response.error.message = 'Bad Request: Invalid Parameters Loans.';
+        response.error.message = 'Bad Request: Invalid Parameters.';
         break;
     case 500:
-        response.error.message = 'Bad Request: Invalid Parameters Logistics.';
+        response.error.message = 'Bad Request: Invalid Parameters.';
         break;
     default:
         response.error.message = 'Bad Request: Default error.';

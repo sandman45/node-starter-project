@@ -20,7 +20,7 @@ exports.jwt = {
 
 exports.mysql = {
     query_timeout: process.env.QUERY_TIMEOUT || 300000,
-    logistics: {
+    database: {
         host: process.env.MYSQL_HOST,
         user: process.env.MYSQL_USER,
         password: process.env.MYSQL_PASSWORD,

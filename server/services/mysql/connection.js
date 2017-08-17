@@ -4,7 +4,7 @@ const mysql = require('promise-mysql');
 const config = require('../../config/config');
 
 const databases = {
-    logistics: {
+    database: {
         pool: null,
     },
 };
@@ -14,13 +14,13 @@ const databases = {
  */
 function initialize() {
     logger.debug(null, '[MYSQL] - Database connection pool initialized.');
-    databases.logistics.pool = mysql.createPool({
-        host: config.mysql.logistics.host,
-        user: config.mysql.logistics.user,
-        password: config.mysql.logistics.password,
-        database: config.mysql.logistics.database,
-        port: config.mysql.logistics.port,
-        connectionLimit: config.mysql.logistics.connectionLimit,
+    databases.database.pool = mysql.createPool({
+        host: config.mysql.database.host,
+        user: config.mysql.database.user,
+        password: config.mysql.database.password,
+        database: config.mysql.database.database,
+        port: config.mysql.database.port,
+        connectionLimit: config.mysql.database.connectionLimit,
         waitForConnections: true,
     });
 }

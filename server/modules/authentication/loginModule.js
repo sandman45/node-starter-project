@@ -47,7 +47,7 @@ module.exports.ldapAuthentication = (username, password, requestId) => new Promi
     username, password, (err, result) => {
         if (err) {
             if (err === 'INVALID_USER_CREDENTIAL') {
-                logger.error(requestId, '[LOGIN] - LOGISTICS_LOGIN_FAILURE_INCORRECT_PASSWORD');
+                logger.error(requestId, '[LOGIN] - INCORRECT_PASSWORD');
                 reject({ error: { code: 101, message: 'Invalid Credential', fid: requestId, type: 'debug', trace: null } });
             } else if (err === 'INVALID_APPLICATION_CREDENTIAL') {
                 reject({ error: { code: 102, message: 'Invalid Application Credential', fid: requestId, type: 'warn', trace: null } });

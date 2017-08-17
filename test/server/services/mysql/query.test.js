@@ -17,8 +17,8 @@ describe('query', () => {
             sinon.stub(mysqlConn, 'connection', () => {
                 return connObject;
             });
-            const db = 'logistics';
-            const sql = 'SELECT * FROM ORDERS LIMIT 1';
+            const db = 'database';
+            const sql = 'SELECT 1 FROM DUAL';
             const values = ['val'];
 
             query.executeQuery(db, sql, values).then((res) => {

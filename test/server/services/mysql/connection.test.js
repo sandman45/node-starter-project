@@ -37,7 +37,7 @@ describe('connection', () => {
             sinon.stub(logger);
             mysqlConn.initialize();
 
-            const db = 'logistics';
+            const db = 'database';
             mysqlConn.connection(db).then((results) => {
                 sinon.assert.match({ hi: 'hi' }, results);
                 sinon.restore(logger);

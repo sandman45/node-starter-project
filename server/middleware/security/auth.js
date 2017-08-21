@@ -1,8 +1,9 @@
 
 const jwt = require('jsonwebtoken');
 const async = require('async');
-const logger = require('');
 const _ = require('lodash');
+
+const logger = global.logger;
 
 const errorTypes = require('../response/lib/errorIndex');
 
@@ -19,20 +20,14 @@ const acl = require('./acl');
  */
 function authenticateToken(req) {
     return new Promise((resolve, reject) => {
-        const fid = {
-            requestId: req.requestId,
-            handler: 'authCheck',
-            functionName: 'authenticateToken',
-        };
-
-        logger.debug(fid.requestId, 'authenticateToken: invoked');
+        logger.debug('authenticateToken: invoked');
 
         const token = req.headers.authorization;
         // check for Bearer authentication scheme
         const hasScheme = token.search('Bearer');
 
         if (token && hasScheme === 0) {
-            logger.debug(fid.requestId, `token is: ${token}`);
+            logger.debug(`token is: ${token}`);
             const checkToken = token.replace('Bearer ', '');
             jwt.verify(checkToken, config.app.cryptoKey, (err, decoded) => {
                 if (err) {
@@ -45,7 +40,7 @@ function authenticateToken(req) {
                         break;
                     }
 
-                    logger.debug(fid.requestId, 'Failed to authenticate token', err);
+                    logger.debug('Failed to authenticate token';
 
                     const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
                     reject(errorResponse);
@@ -66,11 +61,11 @@ function authenticateToken(req) {
             });
         } else {
             if (hasScheme !== 0) {
-                logger.warn(fid.requestId, 'Missing Bearer Authentication Scheme', token);
+                logger.warn('Missing Bearer Authentication Scheme');
                 const errorResponse = new errorTypes.UnauthorizedResponse(112, '');
                 reject(errorResponse);
             }
-            logger.warn(fid.requestId, 'There is no token', token);
+            logger.warn('There is no token');
             const errorResponse = new errorTypes.UnauthorizedResponse(113, '');
             reject(errorResponse);
         }
@@ -85,13 +80,7 @@ function authenticateToken(req) {
  */
 function applicationAuthorization(req) {
     return new Promise((resolve, reject) => {
-        const fid = {
-            requestId: req.requestId,
-            handler: 'authCheck',
-            functionName: 'applicationAuthorization',
-        };
-
-        logger.debug(fid.requestId, 'invoked');
+        logger.debug('invoked');
 
         const userAppRoles = [];
 
@@ -107,7 +96,7 @@ function applicationAuthorization(req) {
                 req.authInfo.roles = userAppRoles;
                 resolve(req);
             } else {
-                logger.debug(fid.requestId, 'Required application roles not available. Invalid User Roles');
+                logger.debug('Required application roles not available. Invalid User Roles');
                 const errorResponse = new errorTypes.UnauthorizedResponse(114, '');
                 reject(errorResponse);
             }
@@ -123,13 +112,8 @@ function applicationAuthorization(req) {
  */
 function endpointAuthorization(req) {
     return new Promise((resolve, reject) => {
-        const fid = {
-            requestId: req.requestId,
-            handler: 'authCheck',
-            functionName: 'endpointAuthorization',
-        };
 
-        logger.debug(fid.requestId, 'invoked');
+        logger.debug('invoked');
 
         const path = req.path;
         const rest = req.method;
@@ -152,7 +136,7 @@ function endpointAuthorization(req) {
                 req.authInfo.authorizedEndpointRoles = authorizedEndpointRoles;
                 resolve(req);
             } else {
-                logger.debug(fid.requestId, 'Required application roles not available. Invalid User Roles');
+                logger.debug('Required application roles not available. Invalid User Roles');
                 const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
                 reject(errorResponse);
             }
@@ -168,24 +152,19 @@ function endpointAuthorization(req) {
  * @param next
  */
 module.exports.authCheck = (req, res, next) => {
-    const fid = {
-        requestId: req.requestId,
-        handler: 'authCheck',
-        functionName: 'authCheck',
-    };
 
-    logger.debug(fid.requestId, 'authCheck: invoked');
+    logger.debug('authCheck: invoked');
 
     authenticateToken(req)
     .then(applicationAuthorization)
     .then(endpointAuthorization)
     .then(() => {
-        logger.debug(fid.requestId, `User: ${req.authInfo.username}, authCheck: successfully authorized.`);
+        logger.debug(`User: ${req.authInfo.username}, authCheck: successfully authorized.`);
         req.username = req.authInfo.username;
         next();
     })
     .catch((err) => {
-        logger.error(fid.requestId, err);
+        logger.error(err);
         if (err && err.res && err.res.status && err.res.send) {
             res.status(err.error.http_response_hint).send(err);
         } else {
@@ -203,26 +182,21 @@ module.exports.authCheck = (req, res, next) => {
  * @param next
  */
 module.exports.isLoggedIn = (req, res, next) => {
-    const fid = {
-        requestId: req.requestId,
-        handler: 'isLoggedIn',
-        functionName: 'isLoggedIn',
-    };
 
-    logger.debug(fid.requestId, 'isLoggedIn: invoked');
+    logger.debug('isLoggedIn: invoked');
 
     authenticateToken(req).then(() => {
-        logger.info(fid.requestId, `User: ${req.authInfo.username}, isLoggedIn: successfully authorized.`);
+        logger.info(`User: ${req.authInfo.username}, isLoggedIn: successfully authorized.`);
         req.username = req.authInfo.username;
         next();
     })
     .catch((err) => {
-        logger.error(fid.requestId, err);
+        logger.error(err);
         if (err && err.res && err.res.status && err.res.send) {
             res.status(err.res.status).send(err.res.send);
         } else {
             const errorResponse = new errorTypes.InternalServerErrorResponse(111, 'Unauthorized');
-            res.status(errorResponse.error.http_response_hint).send(errorResponse);
+            res.status(errorResponse.error.http_response_code).send(errorResponse);
         }
     });
 };

@@ -6,10 +6,9 @@ const loginModule = require('./loginModule');
  * login process ldap, jwt token
  * @param username
  * @param password
- * @param requestId
  */
-function login(username, password, requestId) {
-    return loginModule.ldapAuthentication(username, password, requestId);
+function login(username, password) {
+    return loginModule.auth(username, password);
 }
 
 module.exports = {

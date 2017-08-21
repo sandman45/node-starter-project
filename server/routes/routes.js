@@ -1,7 +1,7 @@
 
 const ROUTES = {
     // POST
-    login: '/api/login',
+    login: '/login',
     // GET
     home: '/',
     health: '/health',

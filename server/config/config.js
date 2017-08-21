@@ -8,7 +8,7 @@ exports.app = {
     environment: process.env.ENVIRONMENT,
     port: process.env.PORT || 3000,
     host: process.env.host || 'http://127.0.0.1',
-    cryptoKey: process.env.CRYPTOKEY,
+    cryptoKey: process.env.CRYPTO_KEY,
     roles: ['Admin'],
     role_prefix: 'Dev_',
 };

@@ -1,4 +1,4 @@
-const config = require('../../config/config');
+const config = require('../../server/config/config');
 
 module.exports = (function (req, res, next) {
     const port = (config.app.port === '80' ? '' : (`:${config.app.port}`));

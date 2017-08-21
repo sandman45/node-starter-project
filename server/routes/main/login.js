@@ -1,4 +1,4 @@
-const logger = require('');
+const logger = global.logger;
 
 const apiRoutes = require('../../routes/routes');
 const loginProcess = require('../../modules/authentication/loginProcess.js');
@@ -6,9 +6,9 @@ const loginProcess = require('../../modules/authentication/loginProcess.js');
 module.exports = (app) => {
     app.post(apiRoutes.login, (req, res, next) => {
         loginProcess.login(req.body.username, req.body.password, req.requestId).then((results) => {
-            next(results);
+            next(`success ${results}`);
         }).catch((error) => {
-            logger.error(error.fid, error, error.message);
+            logger.error(error.message);
             next(error.error);
         });
     });

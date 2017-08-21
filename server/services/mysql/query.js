@@ -1,4 +1,4 @@
-const logger = require('');
+const logger = global.logger;
 const mysqlConn = require('./connection');
 
 /**

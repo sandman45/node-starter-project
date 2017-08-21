@@ -1,4 +1,4 @@
-const logger = require('');
+const logger = global.logger;
 const mysql = require('promise-mysql');
 
 const config = require('../../config/config');

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-// TODO: rename this file
+
 /**
  *getRouteFiles
  * @param dir

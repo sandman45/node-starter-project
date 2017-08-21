@@ -1,7 +1,6 @@
 
 const jwt = require('jsonwebtoken');
 const async = require('async');
-const _ = require('lodash');
 
 const logger = global.logger;
 
@@ -40,7 +39,7 @@ function authenticateToken(req) {
                         break;
                     }
 
-                    logger.debug('Failed to authenticate token';
+                    logger.debug('Failed to authenticate token');
 
                     const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
                     reject(errorResponse);
@@ -112,7 +111,6 @@ function applicationAuthorization(req) {
  */
 function endpointAuthorization(req) {
     return new Promise((resolve, reject) => {
-
         logger.debug('invoked');
 
         const path = req.path;
@@ -152,7 +150,6 @@ function endpointAuthorization(req) {
  * @param next
  */
 module.exports.authCheck = (req, res, next) => {
-
     logger.debug('authCheck: invoked');
 
     authenticateToken(req)
@@ -182,7 +179,6 @@ module.exports.authCheck = (req, res, next) => {
  * @param next
  */
 module.exports.isLoggedIn = (req, res, next) => {
-
     logger.debug('isLoggedIn: invoked');
 
     authenticateToken(req).then(() => {

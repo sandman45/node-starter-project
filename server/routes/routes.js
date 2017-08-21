@@ -4,7 +4,6 @@ const ROUTES = {
     login: '/login',
     // GET
     home: '/',
-    health: '/health',
     test: '/test',
     test2: '/test2',
     test3: '/test3',

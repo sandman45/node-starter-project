@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "func-names": ["error", "never"],
+    "indent": [2, 4],
+    "max-len": ["error", {
+      "code": 120,
+      "ignoreComments": true,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreRegExpLiterals": true
+    }],
+    "import/no-dynamic-require": "off",
+    "global-require": 0,
+  "no-underscore-dangle": ["error", { "allow": ["__base", "_bar"] }]
+  },
+  "globals": {
+    "__base": true
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  }
+}

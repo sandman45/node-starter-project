@@ -8,7 +8,6 @@ const tagsRoles = {
         ],
         GET: [
             routes.home,
-            routes.health,
             routes.test,
             routes.test2,
             routes.test3,

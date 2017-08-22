@@ -65,7 +65,7 @@ module.exports = (app) => {
         });
     };
 
-    const NoMatchFound = (req, res, next) => {
+    const NoMatchFound = (req, res) => {
         res.status(404).send('version not found');
     };
 

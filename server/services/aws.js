@@ -1,6 +1,7 @@
 
 const AWS = require('aws-sdk');
-const logger = require('');
+
+const logger = global.logger;
 
 const config = require('../../server/config/config');
 

@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-module.exports = function (results, req, res, next) {
+module.exports = function (results, req, res) {
     if (_.has(results, 'error')) {
         res.status(results.error.code).send(results);
     } else {

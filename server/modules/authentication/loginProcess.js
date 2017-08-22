@@ -3,7 +3,7 @@ const loginModule = require('./loginModule');
 
 /**
  * login
- * login process ldap, jwt token
+ * login process auth, jwt token
  * @param username
  * @param password
  */

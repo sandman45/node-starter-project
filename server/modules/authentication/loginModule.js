@@ -26,7 +26,7 @@ module.exports.createJWTAccessToken = (username, roles) => new Promise((resolve)
     });
 });
 
-module.exports.auth = (username, password) => module.exports.createJWTAccessToken(username, ['admin']);
+module.exports.auth = username => module.exports.createJWTAccessToken(username, ['admin']);
 
 /**
   * successLoginBody (Object)

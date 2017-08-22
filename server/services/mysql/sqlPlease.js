@@ -35,9 +35,7 @@ function load(dir) {
     files.forEach((file) => {
         if ((file.name.indexOf('.sql') !== -1) || (file.name.indexOf('.SQL') !== -1)) {
         // Convert to camelCase
-            const queryName = file.name.split('.')[0].replace(/((\-|\_)[a-z0-9])/g, ($1) => {
-                return $1.toUpperCase().replace($1[0], '');
-            });
+            const queryName = file.name.split('.')[0].replace(/((\-|\_)[a-z0-9])/g, $1 => $1.toUpperCase().replace($1[0], ''));
             queries[queryName] = fs.readFileSync(file.path, 'utf8');
         }
     });

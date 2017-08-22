@@ -45,9 +45,9 @@
   },
   "engine": "node 7.9.0",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test",
-    "start": "node index.js",
-    "lint": "eslint **/*.js --ignore-path node_modules/"
+    "test": "mocha test",
+    "start": "node server.js",
+    "lint": "eslint server/**"
   },
   "repository": {
     "type": "git",

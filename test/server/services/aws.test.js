@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 describe('aws', () => {
     const AWS = require('aws-sdk');
-    const logger = require('@clip/node.logger');
+    const logger = global.logger;
 
     describe('#getS3', () => {
         it('should initialized the AWS object and return s3 object', () => {

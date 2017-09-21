@@ -2,8 +2,6 @@
 const jwt = require('jsonwebtoken');
 const async = require('async');
 
-const logger = global.logger;
-
 const errorTypes = require('../response/lib/errorIndex');
 
 const config = require('../../config/config');
@@ -19,14 +17,14 @@ const acl = require('./acl');
  */
 function authenticateToken(req) {
     return new Promise((resolve, reject) => {
-        logger.debug('authenticateToken: invoked');
+        global.logger.info('authenticateToken: invoked');
 
         const token = req.headers.authorization;
         // check for Bearer authentication scheme
         const hasScheme = token.search('Bearer');
 
         if (token && hasScheme === 0) {
-            logger.debug(`token is: ${token}`);
+            global.logger.info(`token is: ${token}`);
             const checkToken = token.replace('Bearer ', '');
             jwt.verify(checkToken, config.app.cryptoKey, (err, decoded) => {
                 if (err) {
@@ -39,7 +37,7 @@ function authenticateToken(req) {
                         break;
                     }
 
-                    logger.debug('Failed to authenticate token');
+                    global.logger.info('Failed to authenticate token');
 
                     const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
                     reject(errorResponse);
@@ -60,11 +58,11 @@ function authenticateToken(req) {
             });
         } else {
             if (hasScheme !== 0) {
-                logger.warn('Missing Bearer Authentication Scheme');
+                global.logger.warn('Missing Bearer Authentication Scheme');
                 const errorResponse = new errorTypes.UnauthorizedResponse(112, '');
                 reject(errorResponse);
             }
-            logger.warn('There is no token');
+            global.logger.warn('There is no token');
             const errorResponse = new errorTypes.UnauthorizedResponse(113, '');
             reject(errorResponse);
         }
@@ -79,7 +77,7 @@ function authenticateToken(req) {
  */
 function applicationAuthorization(req) {
     return new Promise((resolve, reject) => {
-        logger.debug('invoked');
+        global.logger.info('invoked');
 
         const userAppRoles = [];
 
@@ -95,7 +93,7 @@ function applicationAuthorization(req) {
                 req.authInfo.roles = userAppRoles;
                 resolve(req);
             } else {
-                logger.debug('Required application roles not available. Invalid User Roles');
+                global.logger.info('Required application roles not available. Invalid User Roles');
                 const errorResponse = new errorTypes.UnauthorizedResponse(114, '');
                 reject(errorResponse);
             }
@@ -111,7 +109,7 @@ function applicationAuthorization(req) {
  */
 function endpointAuthorization(req) {
     return new Promise((resolve, reject) => {
-        logger.debug('invoked');
+        global.logger.info('invoked');
 
         const path = req.path;
         const rest = req.method;
@@ -134,7 +132,7 @@ function endpointAuthorization(req) {
                 req.authInfo.authorizedEndpointRoles = authorizedEndpointRoles;
                 resolve(req);
             } else {
-                logger.debug('Required application roles not available. Invalid User Roles');
+                global.logger.info('Required application roles not available. Invalid User Roles');
                 const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
                 reject(errorResponse);
             }
@@ -150,18 +148,18 @@ function endpointAuthorization(req) {
  * @param next
  */
 module.exports.authCheck = (req, res, next) => {
-    logger.debug('authCheck: invoked');
+    global.logger.info('authCheck: invoked');
 
     authenticateToken(req)
     .then(applicationAuthorization)
     .then(endpointAuthorization)
     .then(() => {
-        logger.debug(`User: ${req.authInfo.username}, authCheck: successfully authorized.`);
+        global.logger.info(`User: ${req.authInfo.username}, authCheck: successfully authorized.`);
         req.username = req.authInfo.username;
         next();
     })
     .catch((err) => {
-        logger.error(err);
+        global.logger.error(err);
         if (err && err.res && err.res.status && err.res.send) {
             res.status(err.error.http_response_hint).send(err);
         } else {
@@ -179,15 +177,15 @@ module.exports.authCheck = (req, res, next) => {
  * @param next
  */
 module.exports.isLoggedIn = (req, res, next) => {
-    logger.debug('isLoggedIn: invoked');
+    global.logger.info('isLoggedIn: invoked');
 
     authenticateToken(req).then(() => {
-        logger.info(`User: ${req.authInfo.username}, isLoggedIn: successfully authorized.`);
+        global.logger.info(`User: ${req.authInfo.username}, isLoggedIn: successfully authorized.`);
         req.username = req.authInfo.username;
         next();
     })
     .catch((err) => {
-        logger.error(err);
+        global.logger.error(err);
         if (err && err.res && err.res.status && err.res.send) {
             res.status(err.res.status).send(err.res.send);
         } else {

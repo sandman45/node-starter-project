@@ -17,7 +17,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get(apiRoutes.test2, auth.authCheck, (req, res, next) => {
+    app.get(apiRoutes.test2, (req, res, next) => {
         exampleModule.test2('my awesome test route 2').then((results) => {
             next(results);
         }).catch((err) => {
@@ -25,7 +25,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get(apiRoutes.test3, auth.authCheck, (req, res, next) => {
+    app.get(apiRoutes.test3, (req, res, next) => {
         exampleModule2.test3('my awesome test route 3').then((results) => {
             next(results);
         }).catch((err) => {
@@ -69,7 +69,7 @@ module.exports = (app) => {
         res.status(404).send('version not found');
     };
 
-    app.get(apiRoutes.test4, auth.authCheck, routesVersioning({
+    app.get(apiRoutes.test4, routesVersioning({
         '^1.0.0': version1, // will accept 1.0.0 - 1.9.9
         '~2.0.0': version2, // will accept 2.0.0 - 2.0.9
         '3.0.0': version3, // will accept 3.0.0 only

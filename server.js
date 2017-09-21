@@ -29,8 +29,7 @@ app.use(middleware.response);
 
 app.listen(config.app.port, (err) => {
     if (err) {
-        return logger.error(`error - ${err}`);
+        return logger.info(`error - ${err}`);
     }
-
     return logger.info(`server running on port: ${config.app.port}`);
 });

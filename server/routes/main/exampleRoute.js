@@ -9,7 +9,7 @@ const exampleModule2 = require('../../../server/modules/exampleModule/example2')
 const errors = require('../../middleware/response/lib/errorIndex');
 
 module.exports = (app) => {
-    app.get(apiRoutes.test, auth.authCheck, (req, res, next) => {
+    app.get(apiRoutes.test, (req, res, next) => {
         exampleModule.test('my awesome test route').then((results) => {
             next(results);
         }).catch((err) => {

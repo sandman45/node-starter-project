@@ -1,1 +1,1 @@
-SELECT 1 FROM DUAL;
+SELECT * FROM testTable;

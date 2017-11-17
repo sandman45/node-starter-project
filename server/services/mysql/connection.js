@@ -9,12 +9,16 @@ const databases = {
     },
 };
 
+databases[config.mysql.database.database] = {
+    pool: null,
+};
+
 /**
  * initialize
  */
 function initialize() {
     logger.debug(null, '[MYSQL] - Database connection pool initialized.');
-    databases.database.pool = mysql.createPool({
+    databases[config.mysql.database.database].pool = mysql.createPool({
         host: config.mysql.database.host,
         user: config.mysql.database.user,
         password: config.mysql.database.password,
@@ -32,7 +36,7 @@ function initialize() {
 function getSqlConnection(db) {
     return databases[db].pool.getConnection().disposer((connection) => {
         databases[db].pool.releaseConnection(connection);
-        logger.debug(null, '[MYSQL] - Connection released.');
+        logger.info(null, '[MYSQL] - Connection released.');
     });
 }
 

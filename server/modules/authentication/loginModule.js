@@ -38,8 +38,8 @@ module.exports.successLoginBody = req => new Promise((resolve) => {
     logger.debug('invoked: successLoginBody');
 
     const responseBody = {
-        access_token: req.passData.token,
-        roles: req.passData.rolesForFrontEnd,
+        access_token: req.token,
+        roles: req.rolesForFrontEnd,
     };
 
     resolve(responseBody);

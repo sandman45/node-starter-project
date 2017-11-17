@@ -15,6 +15,7 @@ global.logger = winston;
 const logger = global.logger;
 const app = express();
 
+app.use(express.static('src'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(helmet());

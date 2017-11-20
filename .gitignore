@@ -4,3 +4,5 @@ npm-debug.log
 dist/
 logs/
 tests/
+.nyc_output/
+coverage/

@@ -1,15 +1,16 @@
 global.Promise = require('bluebird');
+global.logger = require('winston');
 
 describe('connection', () => {
     const mysql = require('promise-mysql');
     const mysqlConn = require('../../../../server/services/mysql/connection');
-    const logger = require('');
+
 
     const sinon = require('sinon');
 
     describe('#initialize', () => {
         it('should call createPool', () => {
-            sinon.stub(logger);
+            sinon.stub(global.logger);
             sinon.stub(mysql, 'createPool');
 
             mysqlConn.initialize();
@@ -17,30 +18,26 @@ describe('connection', () => {
             sinon.assert.calledOnce(mysql.createPool);
 
             mysql.createPool.restore();
-            sinon.restore(logger);
+            sinon.restore(global.logger);
         });
     });
 
     describe('#connection', () => {
         it('should getSqlConnection from pool', () => {
-            const cpResponse = () => {
-                return {
-                    getConnection: () => {
-                        return {
-                            disposer: () => Promise.resolve({ hi: 'hi' }),
-                        };
-                    },
-                    releaseConnection: () => {},
-                };
-            };
+            const cpResponse = () => ({
+                getConnection: () => ({
+                    disposer: () => Promise.resolve({ hi: 'hi' }),
+                }),
+                releaseConnection: () => {},
+            });
             sinon.stub(mysql, 'createPool', cpResponse);
-            sinon.stub(logger);
+            sinon.stub(global.logger);
             mysqlConn.initialize();
 
-            const db = 'database';
+            const db = 'undefined';
             mysqlConn.connection(db).then((results) => {
                 sinon.assert.match({ hi: 'hi' }, results);
-                sinon.restore(logger);
+                sinon.restore(global.logger);
                 mysql.createPool.restore();
             });
         });

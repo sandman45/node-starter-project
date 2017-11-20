@@ -17,7 +17,7 @@ databases[config.mysql.database.database] = {
  * initialize
  */
 function initialize() {
-    logger.debug(null, '[MYSQL] - Database connection pool initialized.');
+    logger.info(null, '[MYSQL] - Database connection pool initialized.');
     databases[config.mysql.database.database].pool = mysql.createPool({
         host: config.mysql.database.host,
         user: config.mysql.database.user,

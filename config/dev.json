@@ -12,8 +12,8 @@
       "connectionLimit": 6
     }
   },
-  "roles": ["ADMIN"],
-  "role_prefix": "ADMIN_",
+  "roles": ["Admin"],
+  "role_prefix": "Admin_",
   "jwt": {
     "algorithm": "HS256",
     "expiresIn": "2 days"

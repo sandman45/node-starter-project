@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 
 const config = require('config');
 const cryptr = require('../../utilities/crypt');
+const unauthorized = require('../../middleware/response/lib/errorIndex').UnauthorizedResponse;
+const queries = require('../../services/mysql/sqlPlease').load('/server/services/mysql/sql');
+
+const mysql = require('../../services/mysql/index').query;
+
+const sql = queries.getUser;
 
 /**
   * createJWTAccessToken (Object)
@@ -26,7 +32,23 @@ module.exports.createJWTAccessToken = (username, roles) => new Promise((resolve)
     });
 });
 
-module.exports.auth = username => module.exports.createJWTAccessToken(username, ['admin']);
+module.exports.auth = username => module.exports.createJWTAccessToken(username, ['Admin']);
+
+/**
+ * userAuth
+ * @param username
+ * @param pass
+ */
+module.exports.userAuth = (username, pass) =>
+    mysql.executeQuery(config.mysql.database.database, sql, { email: username }).then((results) => {
+        logger.info(`${username}: ${pass}`);
+        logger.info(results);
+        if (pass === results[0].password_hash) {
+            return module.exports.createJWTAccessToken(username, ['Admin']);
+        }
+        const err = unauthorized(1, 'Unauthorized');
+        return Promise.reject(err);
+    });
 
 /**
   * successLoginBody (Object)

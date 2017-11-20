@@ -8,7 +8,7 @@ const loginModule = require('./loginModule');
  * @param password
  */
 function login(username, password) {
-    return loginModule.auth(username, password);
+    return loginModule.userAuth(username, password);
 }
 
 module.exports = {

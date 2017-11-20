@@ -21,49 +21,55 @@ function authenticateToken(req) {
 
         const token = req.headers.authorization;
         // check for Bearer authentication scheme
-        const hasScheme = token.search('Bearer');
+        if (token !== undefined && token !== null) {
+            const hasScheme = token.search('Bearer');
 
-        if (token && hasScheme === 0) {
-            global.logger.info(`token is: ${token}`);
-            const checkToken = token.replace('Bearer ', '');
-            jwt.verify(checkToken, config.cryptoKey, (err, decoded) => {
-                if (err) {
-                    switch (err.name) {
-                    case 'TokenExpiredError':
-                        break;
-                    case 'JsonWebTokenError':
-                        break;
-                    default:
-                        break;
+            if (token && hasScheme === 0) {
+                global.logger.info(`token is: ${token}`);
+                const checkToken = token.replace('Bearer ', '');
+                jwt.verify(checkToken, config.cryptoKey, (err, decoded) => {
+                    if (err) {
+                        switch (err.name) {
+                        case 'TokenExpiredError':
+                            break;
+                        case 'JsonWebTokenError':
+                            break;
+                        default:
+                            break;
+                        }
+
+                        global.logger.info('Failed to authenticate token');
+
+                        const errorResponse = new errorTypes.UnauthorizedResponse(111, 'Failed to authenticate token');
+                        reject(errorResponse);
+                    } else {
+                        const decryptedData = JSON.parse(cryptr.decrypt(decoded.token));
+
+                        req.authInfo = {
+                            token,
+                            tokenData: decryptedData,
+                            username: decryptedData.username,
+                            roles: decryptedData.roles,
+                            exp: decoded.exp,
+                            iat: decoded.iat,
+                        };
+
+                        resolve(req);
                     }
-
-                    global.logger.info('Failed to authenticate token');
-
-                    const errorResponse = new errorTypes.UnauthorizedResponse(111, '');
+                });
+            } else {
+                if (hasScheme !== 0) {
+                    global.logger.warn('Missing Bearer Authentication Scheme');
+                    const errorResponse = new errorTypes.UnauthorizedResponse(112, 'Missing Bearer Authentication Scheme');
                     reject(errorResponse);
-                } else {
-                    const decryptedData = JSON.parse(cryptr.decrypt(decoded.token));
-
-                    req.authInfo = {
-                        token,
-                        tokenData: decryptedData,
-                        username: decryptedData.username,
-                        roles: decryptedData.roles,
-                        exp: decoded.exp,
-                        iat: decoded.iat,
-                    };
-
-                    resolve(req);
                 }
-            });
-        } else {
-            if (hasScheme !== 0) {
-                global.logger.warn('Missing Bearer Authentication Scheme');
-                const errorResponse = new errorTypes.UnauthorizedResponse(112, '');
+                global.logger.warn('There is no token');
+                const errorResponse = new errorTypes.UnauthorizedResponse(113, 'There is no token');
                 reject(errorResponse);
             }
+        } else {
             global.logger.warn('There is no token');
-            const errorResponse = new errorTypes.UnauthorizedResponse(113, '');
+            const errorResponse = new errorTypes.UnauthorizedResponse(113, 'There is no token');
             reject(errorResponse);
         }
     });
@@ -160,12 +166,7 @@ module.exports.authCheck = (req, res, next) => {
     })
     .catch((err) => {
         global.logger.error(err);
-        if (err && err.res && err.res.status && err.res.send) {
-            res.status(err.error.http_response_hint).send(err);
-        } else {
-            const errorResponse = new errorTypes.InternalServerErrorResponse(500, 'Problem performing auth check');
-            res.status(errorResponse.error.http_response_hint).send(errorResponse);
-        }
+        res.status(err.error.http_response_code).send(err);
     });
 };
 

@@ -4,7 +4,7 @@ const async = require('async');
 
 const errorTypes = require('../response/lib/errorIndex');
 
-const config = require('../../config/config');
+const config = require('config');
 const cryptr = require('../../utilities/crypt');
 
 const acl = require('./acl');
@@ -26,7 +26,7 @@ function authenticateToken(req) {
         if (token && hasScheme === 0) {
             global.logger.info(`token is: ${token}`);
             const checkToken = token.replace('Bearer ', '');
-            jwt.verify(checkToken, config.app.cryptoKey, (err, decoded) => {
+            jwt.verify(checkToken, config.cryptoKey, (err, decoded) => {
                 if (err) {
                     switch (err.name) {
                     case 'TokenExpiredError':
@@ -81,9 +81,9 @@ function applicationAuthorization(req) {
 
         const userAppRoles = [];
 
-        async.map(config.app.roles, (role, callback) => {
+        async.map(config.roles, (role, callback) => {
             if (req.authInfo.roles.indexOf(role) > -1) {
-                userAppRoles.push(role.replace(config.app.role_prefix, ''));
+                userAppRoles.push(role.replace(config.role_prefix, ''));
                 callback(null, true);
             } else {
                 callback(null, false);

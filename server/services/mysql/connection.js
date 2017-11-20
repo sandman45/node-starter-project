@@ -1,7 +1,7 @@
 const logger = global.logger;
 const mysql = require('promise-mysql');
 
-const config = require('../../config/config');
+const config = require('config');
 
 const databases = {
     database: {
@@ -17,7 +17,7 @@ databases[config.mysql.database.database] = {
  * initialize
  */
 function initialize() {
-    logger.info(null, '[MYSQL] - Database connection pool initialized.');
+    logger.info('[MYSQL] - Database connection pool initialized.');
     databases[config.mysql.database.database].pool = mysql.createPool({
         host: config.mysql.database.host,
         user: config.mysql.database.user,
@@ -36,7 +36,7 @@ function initialize() {
 function getSqlConnection(db) {
     return databases[db].pool.getConnection().disposer((connection) => {
         databases[db].pool.releaseConnection(connection);
-        logger.info(null, '[MYSQL] - Connection released.');
+        logger.info('[MYSQL] - Connection released.');
     });
 }
 

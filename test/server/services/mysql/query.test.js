@@ -3,7 +3,7 @@ global.Promise = require('bluebird');
 describe('query', () => {
     const query = require('../../../../server/services/mysql/query');
     const mysqlConn = require('../../../../server/services/mysql/connection');
-    const logger = require('');
+    const logger = require('winston');
 
     const sinon = require('sinon');
 

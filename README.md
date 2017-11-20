@@ -1,13 +1,13 @@
 # Node Starter Project
 
-##Structure
+## Structure
 
   This is the directory structure of the application.
   
 ```
   ├── app
+  ├── config
   ├── server
-  │   ├── config
   │   ├── init
   │   ├── middleware
   │   ├── modules
@@ -19,9 +19,8 @@
   │    └── server
   │        ├── middleware
   │        └── services
-  └── reports
-        ├── coverage
-        ├── report   
+  └── coverage
+        ├── lcov-report
   ```
 
 ## Installation

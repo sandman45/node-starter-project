@@ -1,7 +1,7 @@
 
-const config = require('../config/config');
+const config = require('config');
 
-const encryptor = require('simple-encryptor')(config.app.cryptoKey);
+const encryptor = require('simple-encryptor')(config.cryptoKey);
 
 module.exports.encrypt = value => encryptor.encrypt(value);
 

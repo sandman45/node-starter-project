@@ -1,7 +1,7 @@
 const logger = global.logger;
 const jwt = require('jsonwebtoken');
 
-const config = require('../../config/config');
+const config = require('config');
 const cryptr = require('../../utilities/crypt');
 
 /**
@@ -21,7 +21,7 @@ module.exports.createJWTAccessToken = (username, roles) => new Promise((resolve)
         expiresIn: config.jwt.expiresIn,
     };
 
-    jwt.sign(jwtPayload, config.app.cryptoKey, jwtOptions, (err, token) => {
+    jwt.sign(jwtPayload, config.cryptoKey, jwtOptions, (err, token) => {
         resolve(token);
     });
 });

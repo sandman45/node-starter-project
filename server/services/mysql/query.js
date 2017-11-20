@@ -10,7 +10,7 @@ const mysqlConn = require('./connection');
  */
 function executeQuery(database, sql, values) {
     return Promise.using(mysqlConn.connection(database), (conn) => {
-        logger.info(null, `[MYSQL] - Connected to - ${database} `);
+        logger.info(`[MYSQL] - Connected to - ${database} `);
         return conn.query(sql, values).then(results => results);
     });
 }

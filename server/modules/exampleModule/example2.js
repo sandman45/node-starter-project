@@ -1,6 +1,6 @@
 
 const logger = global.logger;
-const config = require('../../config/config');
+const config = require('config');
 
 const queries = require('../../services/mysql/sqlPlease').load('/server/services/mysql/sql');
 

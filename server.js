@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
-const config = require('./server/config/config');
+const config = require('config');
 const middleware = require('./server/middleware');
 const validator = require('express-validator');
 
@@ -30,9 +30,9 @@ require('./server/init/initialize');
 
 app.use(middleware.response);
 
-app.listen(config.app.port, (err) => {
+app.listen(config.port, (err) => {
     if (err) {
         return logger.info(`error - ${err}`);
     }
-    return logger.info(`server running on port: ${config.app.port}`);
+    return logger.info(`server running on port: ${config.port}`);
 });

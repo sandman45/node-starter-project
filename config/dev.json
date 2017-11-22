@@ -12,6 +12,12 @@
       "connectionLimit": 6
     }
   },
+  "aws": {
+    "s3" :{
+      "accessKeyId": 12345,
+      "secretAccessKey": 12345
+    }
+  },
   "roles": ["Admin"],
   "role_prefix": "Admin_",
   "jwt": {

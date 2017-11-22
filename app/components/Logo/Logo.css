@@ -1,0 +1,11 @@
+
+.logo {
+    width: 75px;
+    height: 75px;
+}
+
+.logoContainer {
+    flex-grow: 1;
+    width: 80px;
+    height: 80px;
+}

@@ -34,7 +34,7 @@ describe('connection', () => {
             sinon.stub(global.logger);
             mysqlConn.initialize();
 
-            const db = 'undefined';
+            const db = 'lightsan_test_database';
             mysqlConn.connection(db).then((results) => {
                 sinon.assert.match({ hi: 'hi' }, results);
                 sinon.restore(global.logger);

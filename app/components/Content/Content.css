@@ -1,0 +1,15 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 100%;
+    color: #999999;
+    background-color: #eaeaea;
+    border-radius: 6px;
+}
+
+.title {
+    color: #7f7f7f;
+    align-self: center;
+}

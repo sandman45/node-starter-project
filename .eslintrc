@@ -3,6 +3,7 @@
   "rules": {
     "func-names": ["error", "never"],
     "indent": [2, 4],
+    "react/jsx-filename-extenstion": [1, { "extensions": [".js", ".jsx"]}],
     "max-len": ["error", {
       "code": 120,
       "ignoreComments": true,
@@ -21,5 +22,10 @@
   "env": {
     "node": true,
     "mocha": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
   }
 }

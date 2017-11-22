@@ -1,11 +1,19 @@
 # Node Starter Project
+This project is for all who want a quick setup of a Node / React project.
 
+    
 ## Structure
 
   This is the directory structure of the application.
   
 ```
   ├── app
+  │     ├── assets
+  │     └── components
+  │          ├── Content
+  │          ├── Footer
+  │          ├── Header
+  │          ├── Logo
   ├── config
   ├── server
   │   ├── init
@@ -20,8 +28,9 @@
   │        ├── middleware
   │        └── services
   └── coverage
-        ├── lcov-report
-  ```
+        └── lcov-report
+  └── postman
+```
 
 ## Installation
 
@@ -86,4 +95,4 @@ coverage report will be in the `coverage/lcov-report/index.html`.  Just open it 
  
 ## Endpoints
 
-See `postman/` for collections to use in postman.
+See `postman/` for collections to use in postman.  Import the collections and test the endpoints!

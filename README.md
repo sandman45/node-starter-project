@@ -81,7 +81,9 @@ Setting the NODE_ENV = dev will tell your app to use the dev.json config file.
 ## Testing
 
 To test the application `npm test` or `npm run cover` for code coverage
+
+coverage report will be in the `coverage/lcov-report/index.html`.  Just open it up with your favorite browser.
  
 ## Endpoints
 
-
+See `postman/` for collections to use in postman.

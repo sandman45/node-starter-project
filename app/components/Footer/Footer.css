@@ -1,0 +1,16 @@
+.footer {
+    padding: 12px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #006666;
+    background-color: #006600;
+    border-radius: 6px;
+}
+
+.title {
+    color: #eaeaea;
+    align-self: center;
+}

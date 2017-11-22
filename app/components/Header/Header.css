@@ -1,0 +1,17 @@
+.header {
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #006666;
+    background-color: #006666;
+    border-radius: 6px;
+}
+
+.title {
+    flex-grow: 1.25;
+    color: #eaeaea;
+    align-self: center;
+}
